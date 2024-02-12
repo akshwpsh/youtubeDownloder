@@ -1,34 +1,32 @@
 from pytube import YouTube
 from moviepy.editor import *
 
-def download_audio(youtube_link, save_path):
+def download_audio(yt, save_path):
     try:
-        yt = YouTube(youtube_link)
-        video = yt.streams.filter(only_audio=True).first()
+        video = yt.streams.filter(only_audio=True).order_by('abr').desc().first()
         out_file = video.download(save_path)
 
-        clip = AudioFileClip(out_file)
-        clip.write_audiofile(out_file.replace(".mp4", ".wav"))
+        audio = AudioFileClip(out_file)
+        audio.close()
 
-        print("다운로드 완료: " + out_file)
-        return "Audio download 완료: " + out_file
+        return "완료"
 
     except Exception as e:
         print("에러: " + str(e))
         return "Error: " + str(e)
 
-def download_video(youtube_link, save_path):
+def download_video(yt, save_path):
     try:
-        yt = YouTube(youtube_link)
-        video = yt.streams.first()
+        video = yt.streams.get_highest_resolution()
         out_file = video.download(save_path)
 
-        print("다운로드 완료: " + out_file)
-        return "Video download 완료: " + out_file
+        return "완료"
 
     except Exception as e:
-        print("에러: " + e)
+        print("에러: " + str(e))
         return "Error: " + str(e)
+
+
     
 
-download_audio("https://www.youtube.com/watch?v=INak4ORss18", "C:/Users/akshw/바탕 화면/test")
+#download_audio("https://www.youtube.com/watch?v=mI-fTqb59Ss", "C:/Users/akshw/바탕 화면/test")
