@@ -5,6 +5,7 @@ from downloader import download_audio, download_video
 import sys
 from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton, QLineEdit, QLabel, QRadioButton, QGroupBox, QHBoxLayout
 from pytube import YouTube
+import os
 
 class Downloader(QThread):
     signal = pyqtSignal('PyQt_PyObject')
@@ -46,7 +47,14 @@ class App(QWidget):
     def initUI(self):
         self.setWindowTitle(self.title)
 
-        self.setWindowIcon(QIcon('Icon.png'))
+         # Set the window icon
+        if getattr(sys, 'frozen', False):
+            # Running as a bundled executable
+            base_path = sys._MEIPASS
+        else:
+            # Running as a normal Python script
+            base_path = os.path.dirname(__file__)
+        self.setWindowIcon(QIcon(os.path.join(base_path, 'Icon.ico')))
 
         self.resize(400, 300)
 
@@ -66,6 +74,10 @@ class App(QWidget):
 
         self.path_entry = QLineEdit()
         path_layout.addWidget(self.path_entry)
+
+        path = os.getcwd()
+
+        self.path_entry.setText(path)
 
         options_group = QGroupBox("Options")
         options_layout = QHBoxLayout()
