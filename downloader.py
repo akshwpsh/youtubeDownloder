@@ -9,6 +9,10 @@ def download_audio(yt, save_path):
         audio = AudioFileClip(out_file)
         audio.close()
 
+        # Rename the file to .mp3
+        base = os.path.splitext(out_file)[0]
+        os.rename(out_file, base + '.mp3')
+
         return "완료"
 
     except Exception as e:
