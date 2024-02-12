@@ -1,5 +1,6 @@
 from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton, QLineEdit, QLabel, QRadioButton
 from PyQt5.QtCore import QThread, pyqtSignal
+from PyQt5.QtGui import QIcon
 from downloader import download_audio, download_video
 import sys
 from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton, QLineEdit, QLabel, QRadioButton, QGroupBox, QHBoxLayout
@@ -44,6 +45,8 @@ class App(QWidget):
 
     def initUI(self):
         self.setWindowTitle(self.title)
+
+        self.setWindowIcon(QIcon('Icon.png'))
 
         self.resize(400, 300)
 
